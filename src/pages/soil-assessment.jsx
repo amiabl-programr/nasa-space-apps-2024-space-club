@@ -1,6 +1,7 @@
 // Example form component
 import { fetchCoordinates } from '@/utils/fetchCoordinates';
 import { useState } from 'react';
+import Header from '@/components/header';
 
 export default function SoilAssessmentForm() {
   const [address, setAddress] = useState("");
@@ -64,6 +65,7 @@ export default function SoilAssessmentForm() {
 
     return (
       <>
+      <Header />
         <form onSubmit={handleAddressSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Enter Farm Address:</label>
