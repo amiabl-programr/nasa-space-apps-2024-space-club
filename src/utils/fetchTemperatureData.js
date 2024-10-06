@@ -106,4 +106,3 @@ export const fetchTemperatureData = async (latitude, longitude, temporalRange, s
   
     return precipitationData;
   };
-  

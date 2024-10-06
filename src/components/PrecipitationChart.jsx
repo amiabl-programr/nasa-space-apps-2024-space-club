@@ -1,6 +1,27 @@
 import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { fetchPrecipitationData } from '../utils/fetchPrecipitationData';
+import {
+  Chart as ChartJS,
+  CategoryScale,  // Import CategoryScale
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+// Register the necessary components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const PrecipitationFormWithChart = () => {
   const [temporalRange, setTemporalRange] = useState('monthly');
