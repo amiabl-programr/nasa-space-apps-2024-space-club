@@ -4,6 +4,7 @@ import TempFormWithChart from '@/components/tempChart';
 import { fetchTemperatureData } from '@/utils/fetchTemperatureData';
 import { latLongToAddress, countryToLatLong } from '../utils/locationUtils';
 import { getUserLocation } from '@/utils/getUserLocation';
+import Header from '@/components/header';
 
 const Temperature = () => {
 //   const [precipitationData, setPrecipitationData] = useState([]);
@@ -20,11 +21,14 @@ const Temperature = () => {
   }, []);
 
   return (
-    <div>
+    <>
+    <Header />
+    <main>
       <h1>Precipitation Data</h1>
       <p>Location: {address}</p>
       <TempFormWithChart />
-    </div>
+    </main>
+    </>
   );
 };
 

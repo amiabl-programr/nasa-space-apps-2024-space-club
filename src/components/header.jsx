@@ -1,30 +1,59 @@
-import Link from "next/link"; 
-import Image from "next/image";
+import Link from "next/link";
+import { useState } from 'react';
 
-const Header =()=>{
-return (
-<>
-    <header className='flex justify-between items-center py-3 px-4 bg-gray-100'>
-        <div className='flex items-center'>
-            {/* Replace with your logo */}
-            <Image alt="Logo" className="w-12 h-12 mr-2" src="" />
-            <span className="text-xl font-semibold">FarmYield</span>
-        </div>
 
-        <nav className='space-x-4'>
-            <Link  className="text-gray-700 hover:text-blue-500" href="/precipitation">
-                Precipitation
-            </Link>
-            <Link className="text-gray-700 hover:text-blue-500" href="/temperature">
-             Temperature
-            </Link>
-            <Link className="text-white bg-blue-500 py-2 px-4 rounded-lg hover:bg-blue-600" href="/soil-assessment">
-                Start Soil Assessment
-            </Link>
-        </nav>
-    </header>
-</>
-)
+function Header() {
+    const [isOpen, setIsOpen] = useState(false);
+    // Initialize the state for the mobile menu
+
+    return (
+        <header className="bg-green-600 shadow-md">
+            <div className="container mx-auto px-4 py-4
+       flex justify-between items-center">
+                <div className="text-xl font-bold text-white">Farm Yield</div>
+                <nav className="hidden md:flex space-x-4 ml-5 mr-5">
+                    
+                    <Link href="/precipitation" className="flex items-center
+           text-white font-bold">
+                         Precipitation
+                    </Link>
+                    <Link href="#" className="flex items-center
+           text-white font-bold">
+                        Temperature
+                    </Link>
+                    <Link href="/soil-assessment" className="flex items-center
+           text-white font-bold">
+                    Soil Assessment
+                    </Link>
+                
+                </nav>
+                <div className="md:hidden">
+                    <button onClick={() => setIsOpen(!isOpen)} className="text-white">
+                        =
+                    </button>
+                </div>
+            </div>
+
+            {/* Mobile Menu */}
+            {isOpen && (
+                <nav className="md:hidden bg-green-600 p-4
+         space-y-2 ml-2 mr-2">
+                    <Link href="/precipitation" className="flex items-center
+           text-white font-bold">
+                         Precipitation
+                    </Link>
+                    <Link href="#" className="flex items-center
+           text-white font-bold">
+                        Temperature
+                    </Link>
+                    <Link href="/soil-assessment" className="flex items-center
+           text-white font-bold">
+                    Soil Assessment
+                    </Link>
+                </nav>
+            )}
+        </header>
+    );
 }
 
 export default Header;

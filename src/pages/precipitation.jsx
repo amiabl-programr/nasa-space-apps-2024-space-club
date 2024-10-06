@@ -4,6 +4,7 @@ import PrecipitationChart from '../components/PrecipitationChart';
 import { fetchPrecipitationData } from '../utils/fetchPrecipitationData';
 import { latLongToAddress, countryToLatLong } from '../utils/locationUtils';
 import { getUserLocation } from '@/utils/getUserLocation';
+import Header from '@/components/header';
 
 const Home = () => {
   const [address, setAddress] = useState('');
@@ -19,11 +20,15 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+
+    <>
+    <Header />
+    <main>
       <h1>Precipitation Data</h1>
       <p>Location: {address}</p>
       <PrecipitationChart />
-    </div>
+    </main>
+    </>
   );
 };
 
