@@ -17,6 +17,7 @@ export default async function handler(req, res) {
     console.log('Google Maps API Response:', response.data); // Log the response for debugging
 
     const address = response.data.results[0]?.formatted_address || 'Address not found';
+    console.log(address);
     return res.status(200).json({ address });
   } catch (error) {
     console.error('Error fetching address:', error);

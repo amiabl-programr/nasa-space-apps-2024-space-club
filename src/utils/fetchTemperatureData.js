@@ -84,16 +84,25 @@ export const fetchTemperatureData = async (latitude, longitude, temporalRange, s
     // Convert the data to a more usable format
     const precipitationData = Object.entries(data.properties.parameter.T2M).map(
       ([date, value]) => {
-        // Parse date based on temporal range
         let formattedDate;
   
-        if (temporalRange === 'daily' || temporalRange === 'hourly') {
-          formattedDate = new Date(date).toLocaleDateString(); // Use full date for daily/hourly
+        if (temporalRange === 'daily') {
+          // For daily data, parse the date as YYYYMMDD
+          formattedDate = new Date(date.slice(0, 4), date.slice(4, 6) - 1, date.slice(6, 8)).toLocaleDateString();
+        } else if (temporalRange === 'hourly') {
+          // For hourly data, parse the date as YYYYMMDDHH (Year, Month, Day, Hour)
+          const year = date.slice(0, 4);
+          const month = date.slice(4, 6) - 1; // Month index (0-based in JS)
+          const day = date.slice(6, 8);
+          const hour = date.slice(8, 10);
+          formattedDate = new Date(year, month, day, hour).toLocaleString(); // Add time formatting
         } else if (temporalRange === 'monthly') {
+          // For monthly data, parse the date as YYYYMM
           const year = date.slice(0, 4);
           const monthIndex = parseInt(date.slice(4, 6)) - 1;
           formattedDate = new Date(year, monthIndex).toLocaleString('default', { month: 'long', year: 'numeric' });
         } else if (temporalRange === 'annual') {
+          // For annual data, just use the year
           formattedDate = date; // Year only
         }
   
@@ -106,3 +115,4 @@ export const fetchTemperatureData = async (latitude, longitude, temporalRange, s
   
     return precipitationData;
   };
+  
