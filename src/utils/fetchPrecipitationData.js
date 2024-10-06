@@ -72,7 +72,7 @@ export const fetchPrecipitationData = async (latitude, longitude, temporalRange,
 
   // Build the API request URL
   const response = await fetch(
-    `https://power.larc.nasa.gov/api/temporal/${selectedTemporal}/point?parameters=T2M&community=AG&longitude=${longitude}&latitude=${latitude}&start=${startYear}&end=${endYear}&format=JSON`
+    `https://power.larc.nasa.gov/api/temporal/${selectedTemporal}/point?parameters=PRECTOTCORR&community=AG&longitude=${longitude}&latitude=${latitude}&start=${startYear}&end=${endYear}&format=JSON`
   );
 
   if (!response.ok) {
@@ -82,7 +82,7 @@ export const fetchPrecipitationData = async (latitude, longitude, temporalRange,
   const data = await response.json();
 
   // Convert the data to a more usable format
-  const precipitationData = Object.entries(data.properties.parameter.T2M).map(
+  const precipitationData = Object.entries(data.properties.parameter.PRECTOTCORR).map(
     ([date, value]) => {
       let formattedDate;
 
