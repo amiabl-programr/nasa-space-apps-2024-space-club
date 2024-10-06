@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
+import { fetchTemperatureData } from '@/utils/fetchTemperatureData';
 import {
   Chart as ChartJS,
-  CategoryScale,  // Import CategoryScale
+  CategoryScale,  
   LinearScale,
   PointElement,
   LineElement,
@@ -10,9 +11,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { fetchTemperatureData } from '@/utils/fetchTemperatureData';
 
-// Register the necessary components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -23,7 +22,7 @@ ChartJS.register(
   Legend
 );
 
-const TempFormWithChart = () => {
+const PrecipitationFormWithChart = () => {
   const [temporalRange, setTemporalRange] = useState('monthly');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
@@ -32,18 +31,11 @@ const TempFormWithChart = () => {
   const [precipitationData, setPrecipitationData] = useState([]);
   const [chartData, setChartData] = useState(null);
   const [error, setError] = useState('');
+  const chartRef = useRef(null); // Reference to the chart instance
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Submitting:', {
-      latitude,
-      longitude,
-      temporalRange,
-      startYear,
-      endYear,
-    });
 
-    // Input validation
     if (!latitude || !longitude || !startYear || !endYear) {
       setError('Please fill in all fields');
       return;
@@ -52,8 +44,7 @@ const TempFormWithChart = () => {
     try {
       const data = await fetchTemperatureData(latitude, longitude, temporalRange, startYear, endYear);
       setPrecipitationData(data);
-      
-      // Prepare data for the chart
+
       const chartLabels = data.map(item => item.date);
       const chartValues = data.map(item => item.value);
       
@@ -69,11 +60,39 @@ const TempFormWithChart = () => {
           },
         ],
       });
-      setError(''); // Clear any previous errors
+      setError('');
     } catch (error) {
       console.error('Error fetching data:', error);
       setError('Failed to fetch precipitation data. Please check the input values.');
     }
+  };
+
+  const downloadCSV = () => {
+    if (!chartData) return;
+
+    const csvRows = [
+      ['Date', 'Precipitation (mm)'], // Header
+      ...precipitationData.map(item => [item.date, item.value]), // Data rows
+    ];
+
+    const csvContent = csvRows.map(row => row.join(',')).join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute('download', `precipitation_data_${latitude}_${longitude}.csv`);
+    link.click();
+  };
+
+  const downloadImage = () => {
+    const chart = chartRef.current;
+
+    if (!chart) return;
+
+    const imageURL = chart.toBase64Image(); // Convert chart to image (base64)
+    const link = document.createElement('a');
+    link.href = imageURL;
+    link.download = `precipitation_chart_${latitude}_${longitude}.png`; // Specify download format (e.g., PNG)
+    link.click();
   };
 
   return (
@@ -83,7 +102,7 @@ const TempFormWithChart = () => {
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Latitude:</label>
           <input
-            type="number" // Changed to number for better validation
+            type="number"
             value={latitude}
             onChange={(e) => setLatitude(e.target.value)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -93,7 +112,7 @@ const TempFormWithChart = () => {
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Longitude:</label>
           <input
-            type="number" // Changed to number for better validation
+            type="number"
             value={longitude}
             onChange={(e) => setLongitude(e.target.value)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -141,18 +160,32 @@ const TempFormWithChart = () => {
         </button>
       </form>
 
-      {/* Display error message if any */}
       {error && <p className="text-red-500 text-center">{error}</p>}
 
-      {/* Display the chart if data is available */}
       {chartData && (
         <div className="chart-container mt-8">
           <h2 className="text-xl font-bold mb-4">Precipitation Chart</h2>
-          <Line data={chartData} />
+          <Line data={chartData} ref={chartRef} />
+
+          <div className="mt-4">
+            <button
+              onClick={downloadCSV}
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-4"
+            >
+              Download CSV
+            </button>
+
+            <button
+              onClick={downloadImage}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Download Chart as Image
+            </button>
+          </div>
         </div>
       )}
     </div>
   );
 };
 
-export default TempFormWithChart;
+export default PrecipitationFormWithChart;
