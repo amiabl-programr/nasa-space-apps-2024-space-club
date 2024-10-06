@@ -15,8 +15,8 @@ return (
             <Link  className="text-gray-700 hover:text-blue-500" href="/precipitation">
                 Precipitation
             </Link>
-            <Link className="text-gray-700 hover:text-blue-500" href="/soil-moisture">
-                Soil Moisture
+            <Link className="text-gray-700 hover:text-blue-500" href="/temperature">
+             Temperature
             </Link>
             <Link className="text-white bg-blue-500 py-2 px-4 rounded-lg hover:bg-blue-600" href="/soil-assessment">
                 Start Soil Assessment
