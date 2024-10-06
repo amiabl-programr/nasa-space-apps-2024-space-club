@@ -118,7 +118,7 @@ const PrecipitationFormWithChart = () => {
       <h1 className="text-2xl font-bold text-center mb-4">Precipitation Data</h1>
       <form onSubmit={handleAddressSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Enter Address:</label>
+          <label className="block text-gray-700 text-sm font-bold mb-2">Enter Farm Address:</label>
           <input
             type="text"
             value={address}
