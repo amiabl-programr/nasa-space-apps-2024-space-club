@@ -17,7 +17,7 @@ function Header() {
            text-white font-bold">
                          Precipitation
                     </Link>
-                    <Link href="#" className="flex items-center
+                    <Link href="/temperature" className="flex items-center
            text-white font-bold">
                         Temperature
                     </Link>
@@ -42,7 +42,7 @@ function Header() {
            text-white font-bold">
                          Precipitation
                     </Link>
-                    <Link href="#" className="flex items-center
+                    <Link href="/temperature" className="flex items-center
            text-white font-bold">
                         Temperature
                     </Link>
