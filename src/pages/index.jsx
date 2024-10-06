@@ -17,19 +17,32 @@ const Home = () => (
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             <div className="bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-xl font-bold mb-4">Track Precipitation</h2>
+                <h2 className="text-xl font-bold mb-4">
+                <Link href="/precipitation">
+                    Track Precipitation 
+                    
+                    </Link> </h2>
                 <p className="text-gray-600">
                     View the precipitation levels over time in your area to better plan your irrigation schedule.
                 </p>
             </div>
             <div className="bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-xl font-bold mb-4">Monitor Soil Moisture</h2>
+                <h2 className="text-xl font-bold mb-4">
+                    <Link href="/temperature">
+                    Track Temperature 
+                    
+                    </Link>
+                    </h2>
                 <p className="text-gray-600">
-                    Assess the moisture levels of your soil and ensure the optimal environment for your crops.
+                    View the temperature levels over time in your area
                 </p>
             </div>
             <div className="bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-xl font-bold mb-4">Start Soil Assessment</h2>
+                <h2 className="text-xl font-bold mb-4">
+                <Link href="/soil-assessment">
+                Start Soil Assessment
+                    
+                    </Link></h2>
                 <p className="text-gray-600">
                     Get a detailed report on your soil’s quality and receive actionable advice on improving crop yield.
                 </p>

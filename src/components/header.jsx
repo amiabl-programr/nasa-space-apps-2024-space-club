@@ -10,7 +10,12 @@ function Header() {
         <header className="bg-green-600 shadow-md">
             <div className="container mx-auto px-4 py-4
        flex justify-between items-center">
-                <div className="text-xl font-bold text-white">Farm Yield</div>
+                <div className="text-xl font-bold text-white">
+                    <Link href="/">
+                    Farm Yield
+                    
+                    </Link>
+                    </div>
                 <nav className="hidden md:flex space-x-4 ml-5 mr-5">
                     
                     <Link href="/precipitation" className="flex items-center
